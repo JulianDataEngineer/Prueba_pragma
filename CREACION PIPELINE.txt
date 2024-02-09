@@ -1,0 +1,56 @@
+
+
+CREACION PIPELINE:
+
+Para este escenario cree un contenedor Docker
+
+// docker pull cloudera/quickstart:latest
+
+Se descarga la imagen de cloudera
+
+//  docker run --hostname=quickstart.cloudera --privileged=true -t -i -v ~/Documents/dockersrc:/Src --publish-all=true -p 8888 cloudera/quickstart /usr/bin/docker-quickstart
+
+Listamos archivos presentes
+
+// hadoop fs -ls
+
+Creamos el directorio
+
+// hadoop fs -mkdir dir_name
+
+Nos conectamos a hue en mi caso con puerto 8888
+
+//http://127.0.0.1:8888
+
+Luego que estamos en el CDP de cloudera, ingresamos al HDFS y hacemos la ingesta de los archivos CSV Para ingestarlos en las tablas SQLHive
+y poder validar que todo se encuentre cargado correctamente.
+Para este escenario cargamos la data en tablas externas y una vez las tengamos listas ejecutamos a tablas transaccionales para que sea mas agil 
+y podamos usar funciones como UPDATE, DELETE, etc
+
+//En la carpeta adjunto los srcipt que utilice para realizar este proceso
+
+
+Sin embargo leyendo nuevamente el contexto del reto tecnico, es crear un pipeline de datos que use micro Batches para ir haciedno real time
+y para esto utilizo el mismo entorno pero ya usando Python y Spark. Y contrui 2 codigos para la posible solucion al problema:
+
+
+// Adjunto archivo Prueba_pragma.py, Prueba2_pragma.py para su validacion
+
+y finalmente lo ejecuto con spark submit 
+
+// spark-submit Prueba_pragma.py
+
+FINAL:
+
+Para este desarrollo Elegi Python, spark ya que es la tecnologia que mas uso en el dia a dia,
+A pesar de que no son archivos de grandes volumes utilice una tecnologia on-premise como es cloudera para dejar datos en HDFS
+y utilicé hive como motor de bases de datos. En ese orden de ideas la contruccion de Pipline de datos Quedo:
+
+
+Docker -> Haddop // Python -> spark // DataWareHouse -> Hive // Spark Submit
+
+COMPLICACIONES:
+Senti que despues del numeral C de los requerimientos fue algo confuso lo que necesitaba o lo que se esperaba, en un caso real me reuniria 
+con el cliente para pedir una aclaracion y continuar con el correcto desarrollo
+
+
